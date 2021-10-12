@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
 import com.info.sha256bit.databinding.ActivityMainBinding;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-
+    private final String shaData = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +26,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String s1 = binding.editTextSha.getText().toString();
-
                 try {
-                    System.out.println(s1 + ": " + toHexString(getSHA(s1)));
-                    binding.textSha256.setText(toHexString(getSHA(s1)));
+                    if(shaData.equals(toHexString(getSHA(s1)))){
+                        Toast.makeText(getApplicationContext(), "Şifre Doğru..", Toast.LENGTH_SHORT).show();
+                        System.out.println(s1 + ": " + toHexString(getSHA(s1)));
+
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Şifre Yanlış !!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
+
             }
         });
     }
